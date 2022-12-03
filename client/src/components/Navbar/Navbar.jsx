@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import SearchIcon from "@material-ui/icons/Search";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -6,15 +6,18 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
+import imgFlag from './flag.png'
+import Cart from "../Cart/Cart";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false)
   return (
     <div className="navbar ">
       <div className="container">
         <div className="wrapper">
           <div className="left">
             <div className="item">
-              <img src="./img/flag.png" alt="" width={40} height={20} />
+              <img src={imgFlag} alt="" width={40} height={20} />
               <KeyboardArrowDownIcon />
             </div>
             <div className="item">
@@ -67,13 +70,14 @@ const Navbar = () => {
               <SearchIcon />
               <PersonOutlineIcon />
               <FavoriteBorderIcon />
-              <div className="cartIcon">
+              <div className="cartIcon" onClick={() => setOpen(!open)}>
                 <ShoppingCartIcon />
                 <span>0</span>
               </div>
             </div>
           </div>
         </div>
+          {open && <Cart/>}
       </div>
     </div>
   );

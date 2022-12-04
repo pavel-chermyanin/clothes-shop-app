@@ -1,0 +1,28 @@
+.leftbar {
+  position: absolute;
+  z-index: 9;
+  top: 70px;
+  padding: 20px;
+  background-color: #fff;
+  min-width: 150px;
+  box-shadow: 2px 3px 10px rgba(34, 60, 80, 0.5);
+  // transform: translateX(-150%);
+  // transition: all 0.2 ease-in-out;
+  animation-name: dropMenu;
+  animation-duration: .2s;
+  .right {
+    display: none;
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+}
+
+@keyframes dropMenu {
+  0%{
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

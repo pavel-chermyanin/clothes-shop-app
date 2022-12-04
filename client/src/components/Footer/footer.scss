@@ -1,15 +1,16 @@
 .footer {
-    margin: 100px 30px 20px;
+  margin: 100px 30px 20px;
   .top {
     display: flex;
     gap: 30px;
+    flex-wrap: wrap;
     .item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        text-align: justify;
-        font-size: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: justify;
+      font-size: 14px;
       h1 {
         font-size: 18px;
         font-weight: 500;
@@ -18,34 +19,42 @@
       span {
         color: gray;
       }
+      @media(max-width: 768px) {
+        &:nth-child(1n + 3) {
+          flex-basis: 100%;
+        }
+      }
     }
   }
   .bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+
     margin-top: 50px;
-    .left{
-        display: flex;
-        align-items: center;
-        .logo{
-            color: #2879fe;
-            font-weight: 700;
-            font-size: 24px;
-        }
-        .copyright{
-            margin-left: 15px;
-            font-size: 14px;
-            color: gray;
-        }
+    .left {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      .logo {
+        color: #2879fe;
+        font-weight: 700;
+        font-size: 24px;
+      }
+      .copyright {
+        font-size: 14px;
+        color: gray;
+      }
     }
-    .right{
-        img{
-            height: 80px;
+    .right {
+      img {
+        height: 80px;
         max-width: 400px;
         width: 100%;
+      }
     }
-    }
-    
-}
+  }
 }

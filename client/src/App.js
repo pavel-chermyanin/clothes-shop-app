@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider,Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
@@ -7,40 +7,41 @@ import Products from "./pages/Products/Products";
 import "./app.scss";
 
 const Layout = () => {
-  return <div className="app">
-    <Navbar/>
-    <Outlet/>
-    <Footer/>
-  </div>
-}
+  return (
+    <div className="app">
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
-        path: '/',
-        element: <Home/>,
+        path: "/",
+        element: <Home />,
       },
       {
-        path: '/products/:id',
-        element: <Products/>,
+        path: "/products/:id",
+        element: <Products />,
       },
       {
-        path: '/product/:id',
-        element: <Product/>,
+        path: "/product/:id",
+        element: <Product />,
       },
-    ]
-    
+    ],
   },
- 
 ]);
 
 function App() {
-  
   return (
-    <div >
+    <div>
       <RouterProvider router={router} />
     </div>
   );

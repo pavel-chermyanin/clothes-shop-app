@@ -1,55 +1,95 @@
-.navbar{
-    height: 70px;
-    .wrapper {
-        padding: 15px 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 18px;
-        .item{
-            display: flex;
-            align-items: center;
-        }
-        .icons{
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #777;
-            cursor: pointer;
+.navbar {
+  height: 70px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0, .2);
 
-            .cartIcon{
-                position: relative;
-                span{
-                    font-size: 12px;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    background-color: #2879fe;
-                    color: #fff;
-                    position: absolute;
-                    right: -10px;
-                    top: -8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    line-height: 18px;
-                }
-            }
-        }
-        .left{
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            
-        }
-        .center{
-            font-size: 20px;
-            letter-spacing: 2px;
-        }
-        .right{
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+  .layer{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0, .2);
+  }
+  .wrapper {
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    @media(max-width:450px) {
+        padding: 15px 0;
     }
+    .burger-menu {
+      display: none;
+      margin-top: 6px;
+      margin-right: 10px;
+      cursor: pointer;
+      @media (max-width: 1100px) {
+        display: block;
+      }
+    }
+    .item {
+      display: flex;
+      align-items: center;
+    }
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #777;
+      cursor: pointer;
+      @media (max-width: 1100px) {
+        gap: 7px;
+      }
+
+      .cartIcon {
+        position: relative;
+        span {
+          font-size: 12px;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background-color: #2879fe;
+          color: #fff;
+          position: absolute;
+          right: -10px;
+          top: -8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          line-height: 18px;
+        }
+      }
+    }
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      @media (max-width: 1100px) {
+        display: none;
+      }
+    }
+    .center {
+      font-size: 20px;
+      letter-spacing: 2px;
+
+      @media (max-width: 1100px) {
+        margin-right: auto;
+        font-size: 16px;
+      }
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .item {
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+  }
 }

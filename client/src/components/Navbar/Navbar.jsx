@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import SearchIcon from "@material-ui/icons/Search";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
-import imgFlag from './flag.png'
+import imgFlag from "./flag.png";
 import Cart from "../Cart/Cart";
+import LeftBar from "../Leftbar/Leftbar";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [leftBar, setLeftBar] = useState(false);
+
+  useEffect(() => {
+    const hideLeftBar = () => {
+      setLeftBar(false);
+    };
+    window.addEventListener("resize", hideLeftBar);
+
+    return () => {
+      window.removeEventListener("resize", hideLeftBar);
+    };
+  }, []);
   return (
     <div className="navbar ">
+      {leftBar && (
+        <>
+          <LeftBar setLeftBar={setLeftBar} leftBar={leftBar} />
+          <div className="layer"></div>
+        </>
+      )}
       <div className="container">
         <div className="wrapper">
+          <div
+            className="burger-menu"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLeftBar(!leftBar);
+            }}
+          >
+            <MenuOpenIcon />
+          </div>
           <div className="left">
             <div className="item">
               <img src={imgFlag} alt="" width={40} height={20} />
@@ -77,7 +106,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-          {open && <Cart/>}
+        {open && <Cart />}
       </div>
     </div>
   );

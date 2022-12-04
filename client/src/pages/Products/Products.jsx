@@ -1,12 +1,29 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import List from '../../components/List/List';
-import './products.scss'
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import List from "../../components/List/List";
+import useFetch from "../../hooks/useFetch";
+import "./products.scss";
 
 const Products = () => {
-  const catId = parseInt(useParams().id)
-  const [maxPrice, setMaxPrice] = useState(1000)
-  const [sort, setSort] = useState(null)
+  const catId = parseInt(useParams().id);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [sort, setSort] = useState(null);
+  const [selectedSubCats, setSelectedSubCats] = useState([]);
+
+  const { data, loading, error } = useFetch(
+    `/sub-categories?[filters][categories][id][$eq]=${catId}`
+  );
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+
+    setSelectedSubCats(
+      isChecked
+        ? [...selectedSubCats, value]
+        : selectedSubCats.filter((item) => item !== value)
+    );
+  };
+  console.log(selectedSubCats)
   return (
     <div className="products">
       <div className="container">
@@ -14,18 +31,17 @@ const Products = () => {
           <div className="left">
             <div className="filteredItem">
               <h2>Product Category</h2>
-              <div className="inputItem">
-                <input type="checkbox" value={1} id="1" />
-                <label htmlFor="1">Shoes</label>
-              </div>
-              <div className="inputItem">
-                <input type="checkbox" value={2} id="2" />
-                <label htmlFor="2">Skirts</label>
-              </div>
-              <div className="inputItem">
-                <input type="checkbox" value={3} id="3" />
-                <label htmlFor="3">Coats</label>
-              </div>
+              {data?.map((item) => (
+                <div className="inputItem" key={item.id}>
+                  <input
+                    type="checkbox"
+                    value={item.id}
+                    id={item.id}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="1">{item.attributes.title}</label>
+                </div>
+              ))}
             </div>
             <div className="filteredItem">
               <h2>Filter by price</h2>
@@ -70,12 +86,17 @@ const Products = () => {
               alt=""
               className="catImg"
             />
-            <List catId={catId} maxPrice={maxPrice} sort={sort} />
+            <List
+              catId={catId}
+              maxPrice={maxPrice}
+              sort={sort}
+              subCats={selectedSubCats}
+            />
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Products
+export default Products;

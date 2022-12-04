@@ -1,11 +1,18 @@
 .featuredProducts {
   margin: 100px 30px;
+  @media(max-width: 450px) {
+    margin: 40px 0;
+  }
 
   .top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 50px;
+    gap: 30px;
+    @media(max-width:600px) {
+      flex-direction: column;
+    }
 
     h1 {
       flex: 2;

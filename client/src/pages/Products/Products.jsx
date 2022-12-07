@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import TuneIcon from "@mui/icons-material/Tune";
 import List from "../../components/List/List";
 import useFetch from "../../hooks/useFetch";
 import "./products.scss";
@@ -8,7 +9,11 @@ const Products = () => {
   const catId = parseInt(useParams().id);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [sort, setSort] = useState(null);
+  const [openFilter, setOpenFilter] = useState(
+    window.matchMedia("(max-width: 500px)").matches ? false : true
+  );
   const [selectedSubCats, setSelectedSubCats] = useState([]);
+  const filterRef = useRef();
 
   const { data, loading, error } = useFetch(
     `/sub-categories?[filters][categories][id][$eq]=${catId}`
@@ -23,12 +28,60 @@ const Products = () => {
         : selectedSubCats.filter((item) => item !== value)
     );
   };
-  console.log(selectedSubCats)
+  useEffect(() => {
+    const hideFilter = () => {
+      const isMobile = window.matchMedia("(min-width: 500px)").matches;
+      if (isMobile) {
+        setOpenFilter(true);
+      } else {
+        openFilter && setOpenFilter(false);
+      }
+    };
+    window.addEventListener("resize", hideFilter);
+
+    return () => {
+      window.removeEventListener("resize", hideFilter);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hideFilterBar = (e) => {
+      e.stopPropagation();
+      if (
+        !e.path.some((item) => item?.classList?.contains("left")) &&
+        !window.matchMedia("(min-width: 500px)").matches &&
+        !e.path.some((item) => item?.classList?.contains("filter"))
+      ) {
+        setOpenFilter(false);
+        console.log(e.target);
+      }
+    };
+    window.addEventListener("click", hideFilterBar);
+
+    return () => {
+      window.removeEventListener("click", hideFilterBar);
+    };
+  }, []);
   return (
     <div className="products">
       <div className="container">
         <div className="productsWrapper">
-          <div className="left">
+          <div
+            className="layer-dark"
+            style={{
+              display:
+                openFilter && !window.matchMedia("(min-width: 500px)").matches
+                  ? "block"
+                  : "none",
+            }}
+          ></div>
+          <div
+            className="left"
+            ref={filterRef}
+            style={{
+              transform: openFilter ? "translateX(0)" : "translateX(-150%)",
+            }}
+          >
             <div className="filteredItem">
               <h2>Product Category</h2>
               {data?.map((item) => (
@@ -78,14 +131,35 @@ const Products = () => {
                 />
                 <label htmlFor="desc">Price (Highest first)</label>
               </div>
+              <div className="inputItem">
+                <button
+                  onClick={(e) => {
+                    // e.stopImmediatePropagation();
+                    !window.matchMedia("(min-width: 500px)").matches &&
+                      setOpenFilter(false);
+                  }}
+                >
+                  Ok
+                </button>
+              </div>
             </div>
           </div>
           <div className="right">
+            <h3 className="mobile-title">Products Category</h3>
             <img
               src="https://brittanyxavier.com/wp-content/uploads/2017/06/thrifts-and-threads-top-shop-new-york-featured.jpg"
               alt=""
               className="catImg"
             />
+            <div
+              className="filter"
+              onClick={() => {
+                setOpenFilter(true);
+              }}
+            >
+              <TuneIcon />
+              <span>filter</span>
+            </div>
             <List
               catId={catId}
               maxPrice={maxPrice}

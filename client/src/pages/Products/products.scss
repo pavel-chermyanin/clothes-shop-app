@@ -3,7 +3,7 @@
   gap: 20px;
   padding: 50px 30px;
 
-  .layer-dark{
+  .layer-dark {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.2);
@@ -45,12 +45,15 @@
         label {
           margin-left: 10px;
         }
-        button{
+        button {
           background-color: #2879fe;
           color: #fff;
           padding: 10px 20px;
         }
       }
+    }
+    @media (max-width: 500px) {
+      margin-left: -20px;
     }
   }
   .right {
@@ -59,12 +62,22 @@
       display: none;
       @media (max-width: 500px) {
         display: block;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: 400;
       }
     }
     .filter {
       display: none;
+
       @media (max-width: 500px) {
-        display: block;
+        display: flex;
+        gap: 20px;
+
+        align-items: center;
+        margin-bottom: 20px;
+        padding: 0 20px;
+        cursor: pointer;
       }
     }
     .catImg {

@@ -34,7 +34,7 @@ const Products = () => {
       if (isMobile) {
         setOpenFilter(true);
       } else {
-        openFilter && setOpenFilter(false);
+        setOpenFilter(false);
       }
     };
     window.addEventListener("resize", hideFilter);
@@ -62,6 +62,15 @@ const Products = () => {
       window.removeEventListener("click", hideFilterBar);
     };
   }, []);
+
+  useEffect(() => {
+    if (openFilter && !window.matchMedia("(min-width: 500px)").matches) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  }, [openFilter]);
+
   return (
     <div className="products">
       <div className="container">

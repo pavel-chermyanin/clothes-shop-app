@@ -108,7 +108,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        {open && <Cart />}
+        {open && <Cart openCart={setOpen} />}
       </div>
     </div>
   );

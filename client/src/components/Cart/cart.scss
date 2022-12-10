@@ -1,8 +1,14 @@
+.dark-layer {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .cart {
   max-width: 400px;
   position: absolute;
   top: 70px;
-  right: 20px;
+  right: 0;
   z-index: 99;
   background-color: #fff;
   padding: 20px;
@@ -67,7 +73,7 @@
     font-weight: 500;
     margin-bottom: 20px;
   }
-  .reset{
+  .reset {
     color: red;
     font-size: 12px;
     cursor: pointer;

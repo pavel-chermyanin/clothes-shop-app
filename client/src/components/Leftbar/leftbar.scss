@@ -6,12 +6,22 @@
   background-color: #fff;
   min-width: 150px;
   box-shadow: 2px 3px 10px rgba(34, 60, 80, 0.5);
-  // transform: translateX(-150%);
-  // transition: all 0.2 ease-in-out;
+
   animation-name: dropMenu;
   animation-duration: .2s;
+
+  .left {
+    .item{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  }
   .right {
     display: none;
+    .item{
+      margin-bottom: 10px;
+    }
     @media (max-width: 768px) {
       display: block;
     }

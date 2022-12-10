@@ -8,11 +8,16 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/cartReducer";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Product = () => {
   const { id } = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [selectedImg, setSelectedImg] = useState("img");
   const [quantity, setQuantity] = useState(1);
+  const [addToCartModal, setAddToCartModal] = useState(false);
+  const [userTimer, setUserTimer] = useState(false);
 
   const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
 
@@ -71,7 +76,8 @@ const Product = () => {
               </div>
               <button
                 className="add"
-                onClick={() =>
+                onClick={() => {
+                  toast("Added to Cart");
                   dispatch(
                     addToCart({
                       id,
@@ -81,8 +87,8 @@ const Product = () => {
                       price: data.attributes.price,
                       quantity,
                     })
-                  )
-                }
+                  );
+                }}
               >
                 <AddShoppingCartIcon /> ADD TO CART
               </button>
@@ -94,6 +100,7 @@ const Product = () => {
                   <CompareIcon /> ADD TO COMPARE
                 </div>
               </div>
+              <ToastContainer position="bottom-right" autoClose={2000} />
               <div className="info">
                 <span>Vendor: Polo</span>
                 <span>Product Type: T-Shirt</span>

@@ -3,10 +3,29 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useDispatch, useSelector } from "react-redux";
 import { removeItem, resetCart } from "../../redux/cartReducer";
 import { useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { makeRequest } from "../makeRequest";
 
 const Cart = ({ openCart }) => {
   const products = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
+
+  const stripePromise = loadStripe(
+    "pk_test_51LdxGjH6OmYKHQ6yn2VYxAZmN3xuVCFIZXzX0Z3vKRbE9Y1WBA36tQPMH6zAP70M0L1AZn8O7PUiVvVNAmq5e2T9000HLjksUp"
+  );
+  const handlePayment = async () => {
+    try {
+      const stripe = await stripePromise;
+      const res = await makeRequest.post('/orders', {
+        products
+      })
+      await stripe.redirectToCheckout({
+        sessionId: res.data.stripeSession.id
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const totalPrice = () => {
     let total = 0;
@@ -19,7 +38,7 @@ const Cart = ({ openCart }) => {
       e.stopPropagation();
       if (e.target.classList.contains("dark-layer")) {
         openCart(false);
-      } 
+      }
     };
     window.addEventListener("click", hideCart);
 
@@ -52,7 +71,7 @@ const Cart = ({ openCart }) => {
           <span>SUBTOTAL</span>
           <span>${totalPrice()}</span>
         </div>
-        <button>PROCEED TO CHECKOUT</button>
+        <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
         <span className="reset" onClick={() => dispatch(resetCart())}>
           Reset Cart
         </span>

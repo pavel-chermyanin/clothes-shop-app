@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./product.scss";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -16,10 +16,12 @@ const Product = () => {
   const dispatch = useDispatch();
   const [selectedImg, setSelectedImg] = useState("img");
   const [quantity, setQuantity] = useState(1);
-  const [addToCartModal, setAddToCartModal] = useState(false);
-  const [userTimer, setUserTimer] = useState(false);
 
   const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="product">

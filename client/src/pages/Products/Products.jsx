@@ -28,6 +28,7 @@ const Products = () => {
         : selectedSubCats.filter((item) => item !== value)
     );
   };
+
   useEffect(() => {
     const hideFilter = () => {
       const isMobile = window.matchMedia("(min-width: 500px)").matches;
@@ -70,6 +71,10 @@ const Products = () => {
       document.body.style.overflowY = "auto";
     }
   }, [openFilter]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="products">
